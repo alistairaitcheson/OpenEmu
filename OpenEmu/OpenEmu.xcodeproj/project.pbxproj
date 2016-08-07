@@ -499,7 +499,6 @@
 		87BD9E2C1C2A6724006722DF /* PC-FX.oesystemplugin in Copy System Plugins to App Plugins */ = {isa = PBXBuildFile; fileRef = 94A22463170753D500098DA0 /* PC-FX.oesystemplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87BD9E2D1C2A672F006722DF /* SG-1000.oesystemplugin in Copy System Plugins to App Plugins */ = {isa = PBXBuildFile; fileRef = 94A22473170753E100098DA0 /* SG-1000.oesystemplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87BD9E2E1C2A673F006722DF /* Sega CD.oesystemplugin in Copy System Plugins to App Plugins */ = {isa = PBXBuildFile; fileRef = 94A224931707542A00098DA0 /* Sega CD.oesystemplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		87BD9E2F1C2A674D006722DF /* PSP.oesystemplugin in Copy System Plugins to App Plugins */ = {isa = PBXBuildFile; fileRef = 94454EB417860E1D006C057B /* PSP.oesystemplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87BD9E301C2A675A006722DF /* PlayStation.oesystemplugin in Copy System Plugins to App Plugins */ = {isa = PBXBuildFile; fileRef = 94A224F61707596100098DA0 /* PlayStation.oesystemplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87BD9E311C2A6774006722DF /* PC Engine CD.oesystemplugin in Copy System Plugins to App Plugins */ = {isa = PBXBuildFile; fileRef = 9405538417A34C6B009B505D /* PC Engine CD.oesystemplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87BD9E321C2A6788006722DF /* Vectrex.oesystemplugin in Copy System Plugins to App Plugins */ = {isa = PBXBuildFile; fileRef = 943F998B1707D51100270E89 /* Vectrex.oesystemplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1451,7 +1450,6 @@
 				87BD9E321C2A6788006722DF /* Vectrex.oesystemplugin in Copy System Plugins to App Plugins */,
 				87BD9E311C2A6774006722DF /* PC Engine CD.oesystemplugin in Copy System Plugins to App Plugins */,
 				87BD9E301C2A675A006722DF /* PlayStation.oesystemplugin in Copy System Plugins to App Plugins */,
-				87BD9E2F1C2A674D006722DF /* PSP.oesystemplugin in Copy System Plugins to App Plugins */,
 				87BD9E2E1C2A673F006722DF /* Sega CD.oesystemplugin in Copy System Plugins to App Plugins */,
 				87BD9E2D1C2A672F006722DF /* SG-1000.oesystemplugin in Copy System Plugins to App Plugins */,
 				87BD9E2C1C2A6724006722DF /* PC-FX.oesystemplugin in Copy System Plugins to App Plugins */,
