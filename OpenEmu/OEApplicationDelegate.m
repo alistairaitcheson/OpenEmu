@@ -215,7 +215,7 @@ static void *const _OEApplicationDelegateAllPluginsContext = (void *)&_OEApplica
 {
     _libraryLoaded = YES;
     
-    [[OECoreUpdater sharedUpdater] checkForUpdatesAndInstall];
+//    [[OECoreUpdater sharedUpdater] checkForUpdatesAndInstall];
 
     [self OE_removeInvalidPlugins];
 
@@ -256,7 +256,7 @@ static void *const _OEApplicationDelegateAllPluginsContext = (void *)&_OEApplica
     if (!restoreWindow)
         [mainWindowController showWindow:self];
 
-    [[OECoreUpdater sharedUpdater] checkForNewCores:@NO];
+//    [[OECoreUpdater sharedUpdater] checkForNewCores:@NO];
 
     NSUserDefaultsController *sudc = [NSUserDefaultsController sharedUserDefaultsController];
     [self bind:@"logHIDEvents" toObject:sudc withKeyPath:@"values.logsHIDEvents" options:nil];
@@ -1044,7 +1044,7 @@ static void *const _OEApplicationDelegateAllPluginsContext = (void *)&_OEApplica
 #pragma mark - Migration
 - (BOOL)migrationForceUpdateCores:(NSError**)outError
 {
-    [[OECoreUpdater sharedUpdater] checkForUpdatesAndInstall];
+//    [[OECoreUpdater sharedUpdater] checkForUpdatesAndInstall];
     return YES;
 }
 
