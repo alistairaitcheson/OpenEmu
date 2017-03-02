@@ -26,21 +26,21 @@
 
 import Foundation
 
-extension NSURL {
+extension URL {
     
     var hasImageSuffix: Bool {
         
-        guard let urlSuffix = pathExtension?.lowercaseString else {
+        guard let urlSuffix = pathExtension.lowercased() else {
             return false
         }
         
         return NSImage.imageTypes().contains(urlSuffix)
     }
     
-    func isSubpathOfURL(url: NSURL) -> Bool {
+    func isSubpathOfURL(_ url: URL) -> Bool {
         
-        guard let parentPathComponents = url.standardizedURL?.pathComponents,
-            ownPathComponents = standardizedURL?.pathComponents else {
+        guard let parentPathComponents = url.standardized.pathComponents,
+            let ownPathComponents = standardized.pathComponents else {
                 return false
         }
         
@@ -57,29 +57,29 @@ extension NSURL {
     
     var isDirectory: Bool {
         
-        guard let resourceValues = try? resourceValuesForKeys([NSURLIsDirectoryKey, NSURLIsPackageKey]) else {
+        guard let resourceValues = try? resourceValues(forKeys: [URLResourceKey.isDirectoryKey, URLResourceKey.isPackageKey]) else {
             return false
         }
         
-        return (resourceValues[NSURLIsDirectoryKey]! as! NSNumber).boolValue &&
-               !(resourceValues[NSURLIsPackageKey]! as! NSNumber).boolValue
+        return (resourceValues[URLResourceKey.isDirectoryKey]! as! NSNumber).boolValue &&
+               !(resourceValues[URLResourceKey.isPackageKey]! as! NSNumber).boolValue
     }
     
     var fileSize: NSNumber {
         
-        guard let resourceValues = try? resourceValuesForKeys([NSURLFileSizeKey]) else {
+        guard let resourceValues = try? resourceValues(forKeys: [URLResourceKey.fileSizeKey]) else {
             return 0
         }
         
-        return resourceValues[NSURLFileSizeKey]! as! NSNumber
+        return resourceValues[URLResourceKey.fileSizeKey]! as! NSNumber
     }
     
-    func uniqueURLUsingBlock(block: (Int) -> NSURL) -> NSURL {
+    func uniqueURLUsingBlock(_ block: (Int) -> URL) -> URL {
         
         var result = self
         var triesCount = 1
         
-        while result.checkResourceIsReachableAndReturnError(nil) {
+        while (result as NSURL).checkResourceIsReachableAndReturnError(nil) {
             triesCount += 1
             result = block(triesCount)
         }
@@ -87,31 +87,31 @@ extension NSURL {
         return result
     }
     
-    class func validFilenameFromString(fileName: String) -> String {
-        let illegalFileNameCharacters = NSCharacterSet(charactersInString: "/\\?%*|\":<>")
+    static func validFilenameFromString(_ fileName: String) -> String {
+        let illegalFileNameCharacters = CharacterSet(charactersIn: "/\\?%*|\":<>")
         return fileName.stringByDeletingCharactersInSet(illegalFileNameCharacters)
     }
     
-    func urlRelativeToURL(url: NSURL) -> NSURL? {
+    func urlRelativeToURL(_ url: URL) -> URL? {
         
-        guard let selfAbsoluteString = standardizedURL?.absoluteString,
-                  urlAbsoluteString = url.standardizedURL?.absoluteString else {
+        guard let selfAbsoluteString = standardized.absoluteString,
+                  let urlAbsoluteString = url.standardized.absoluteString else {
             return nil
         }
         
-        let range = (selfAbsoluteString as NSString).rangeOfString(urlAbsoluteString)
+        let range = (selfAbsoluteString as NSString).range(of: urlAbsoluteString)
         
         if range.location != NSNotFound && range.location == 0 {
-            return NSURL(string: (selfAbsoluteString as NSString).substringFromIndex(range.length))
+            return URL(string: (selfAbsoluteString as NSString).substring(from: range.length))
         } else {
-            return standardizedURL
+            return standardized
         }
     }
 }
 
 extension String {
     
-    func stringByDeletingCharactersInSet(set: NSCharacterSet) -> String {
-        return (self as NSString).componentsSeparatedByCharactersInSet(set).joinWithSeparator("")
+    func stringByDeletingCharactersInSet(_ set: CharacterSet) -> String {
+        return (self as NSString).components(separatedBy: set).joined(separator: "")
     }
 }
