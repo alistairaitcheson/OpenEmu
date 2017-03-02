@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
@@ -152,8 +152,8 @@
         </customObject>
         <menu title="bb" systemMenu="main" id="970" userLabel="Main Menu">
             <items>
-                <menuItem title="OpenEmu" id="975">
-                    <menu key="submenu" title="OpenEmu" systemMenu="apple" id="1013">
+                <menuItem title="OpenEmu Custom" id="975">
+                    <menu key="submenu" title="OpenEmu Custom" systemMenu="apple" id="1013">
                         <items>
                             <menuItem title="About OpenEmu" id="1017">
                                 <modifierMask key="keyEquivalentModifierMask"/>
