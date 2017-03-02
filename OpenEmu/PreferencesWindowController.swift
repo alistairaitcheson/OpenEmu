@@ -67,7 +67,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         preferencesTabViewController = PreferencesTabViewController()
         
         preferencesTabViewController.view.frame = backgroundView.bounds
-        preferencesTabViewController.view.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+        preferencesTabViewController.view.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         
         backgroundView.addSubview(preferencesTabViewController.view)
         
@@ -76,7 +76,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: -
     
-    func showWindowWithNotification(_ notification: Notification) {
+    func showWindowWithNotification(notification: NSNotification) {
         
         showWindow(nil)
         
@@ -88,38 +88,38 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         
         // If selected, the controls preference pane performs additional work using the notification.
         if let controlsPane = preferencesTabViewController.tabView.selectedTabViewItem?.viewController as? OEPrefControlsController {
-            controlsPane.preparePane(with: notification)
+            controlsPane.preparePaneWithNotification(notification)
         }
     }
     
-    func selectPaneWithTabViewIdentifier(_ identifier: String) {
+    func selectPaneWithTabViewIdentifier(identifier: String) {
         
-        let index = preferencesTabViewController.tabView.indexOfTabViewItem(withIdentifier: identifier)
+        let index = preferencesTabViewController.tabView.indexOfTabViewItemWithIdentifier(identifier)
         
         guard index != NSNotFound else {
             return
         }
         
-        preferencesTabViewController.tabView.selectTabViewItem(at: index)
+        preferencesTabViewController.tabView.selectTabViewItemAtIndex(index)
     }
     
     // MARK: - NSWindowDelegate
     
-    func windowDidBecomeKey(_ notification: Notification) {
+    func windowDidBecomeKey(notification: NSNotification) {
         
         konamiCodeIndex = 0
         
-        konamiCodeMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+        konamiCodeMonitor = NSEvent.addLocalMonitorForEventsMatchingMask(.KeyDownMask) { event in
             
-            if Int((event.characters! as NSString).character(at: 0)) == self.konamiCode[self.konamiCodeIndex] {
+            if Int((event.characters! as NSString).characterAtIndex(0)) == self.konamiCode[self.konamiCodeIndex] {
                 
                 self.konamiCodeIndex += 1
                 
                 if self.konamiCodeIndex == self.konamiCode.count {
                     
-                    let defaults = UserDefaults.standard
-                    let debugModeActivated = !defaults.bool(forKey: PreferencesWindowController.debugModeKey)
-                    defaults.set(debugModeActivated, forKey: PreferencesWindowController.debugModeKey)
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    let debugModeActivated = !defaults.boolForKey(PreferencesWindowController.debugModeKey)
+                    defaults.setBool(debugModeActivated, forKey: PreferencesWindowController.debugModeKey)
                     
                     NSSound(named: "secret")!.play()
                     
@@ -134,10 +134,10 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             self.konamiCodeIndex = 0
             
             return event
-        } as AnyObject?
+        }
     }
     
-    func windowDidResignKey(_ notification: Notification) {
+    func windowDidResignKey(notification: NSNotification) {
         
         if let konamiCodeMonitor = konamiCodeMonitor {
             NSEvent.removeMonitor(konamiCodeMonitor)
@@ -151,13 +151,13 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 class PreferencesTabViewController: NSTabViewController {
     
     /// Used to track when viewDidLoad has completed so that the default pane index selection of 0 doesn't get recorded in tabView(_:, didSelectTabViewItem:).
-    fileprivate var viewDidLoadFinished = false
+    private var viewDidLoadFinished = false
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        tabStyle = .toolbar
+        tabStyle = .Toolbar
         
         // The collection of preference panes to add.
         var preferencePanes: [OEPreferencePane] = [
@@ -169,8 +169,8 @@ class PreferencesTabViewController: NSTabViewController {
         ]
         
         // Check if the debug pane should be included.
-        let defaults = UserDefaults.standard
-        if defaults.bool(forKey: PreferencesWindowController.debugModeKey) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.boolForKey(PreferencesWindowController.debugModeKey) {
             preferencePanes.append(OEPrefDebugController())
         }
         
@@ -180,13 +180,13 @@ class PreferencesTabViewController: NSTabViewController {
         }
         
         // Check defaults for a pane to select.
-        var indexOfPaneToSelect = defaults.integer(forKey: PreferencesWindowController.selectedPreferencesTabKey)
+        var indexOfPaneToSelect = defaults.integerForKey(PreferencesWindowController.selectedPreferencesTabKey)
         if !(0..<childViewControllers.count ~= indexOfPaneToSelect) {
             indexOfPaneToSelect = 0
         }
         
         // Select a pane.
-        tabView.selectTabViewItem(at: indexOfPaneToSelect)
+        tabView.selectTabViewItemAtIndex(indexOfPaneToSelect)
         
         viewDidLoadFinished = true
     }
@@ -199,33 +199,33 @@ class PreferencesTabViewController: NSTabViewController {
         updateWindowFrameAnimated(false)
     }
     
-    override func transition(from fromViewController: NSViewController, to toViewController: NSViewController, options: NSViewControllerTransitionOptions, completionHandler completion: (() -> Void)?) {
+    override func transitionFromViewController(fromViewController: NSViewController, toViewController: NSViewController, options: NSViewControllerTransitionOptions, completionHandler completion: (() -> Void)?) {
         
         NSAnimationContext.runAnimationGroup({ context in
             
             self.updateWindowTitle()
             self.updateWindowFrameAnimated(true)
             
-            super.transition(from: fromViewController, to: toViewController, options: [.crossfade, .allowUserInteraction], completionHandler: completion)
+            super.transitionFromViewController(fromViewController, toViewController: toViewController, options: [.Crossfade, .AllowUserInteraction], completionHandler: completion)
             
         }, completionHandler: nil)
     }
     
-    override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+    override func tabView(tabView: NSTabView, didSelectTabViewItem tabViewItem: NSTabViewItem?) {
         
-        super.tabView(tabView, didSelect: tabViewItem)
+        super.tabView(tabView, didSelectTabViewItem: tabViewItem)
         
         guard viewDidLoadFinished else {
             return
         }
         
         // Record the selected pane index in user defaults.
-        UserDefaults.standard.set(selectedTabViewItemIndex, forKey: PreferencesWindowController.selectedPreferencesTabKey)
+        NSUserDefaults.standardUserDefaults().setInteger(selectedTabViewItemIndex, forKey: PreferencesWindowController.selectedPreferencesTabKey)
     }
     
     // MARK: -
     
-    func addTabViewItemWithPreferencePane(_ pane: OEPreferencePane) {
+    func addTabViewItemWithPreferencePane(pane: OEPreferencePane) {
         
         let item = NSTabViewItem(viewController: pane as! NSViewController)
         
@@ -240,14 +240,14 @@ class PreferencesTabViewController: NSTabViewController {
         view.window?.title = tabView.selectedTabViewItem?.label ?? ""
     }
     
-    func updateWindowFrameAnimated(_ animated: Bool) {
+    func updateWindowFrameAnimated(animated: Bool) {
         
-        guard let selectedItem = tabView.selectedTabViewItem, let window = view.window else {
+        guard let selectedItem = tabView.selectedTabViewItem, window = view.window else {
             return
         }
         
         let contentSize = (selectedItem.viewController! as! OEPreferencePane).viewSize
-        let newWindowSize = window.frameRect(forContentRect: NSRect(origin: NSPoint.zero, size: contentSize)).size
+        let newWindowSize = window.frameRectForContentRect(NSRect(origin: NSPoint.zero, size: contentSize)).size
         
         var frame = window.frame
         frame.origin.y += frame.height
@@ -265,13 +265,13 @@ class PreferencesTabViewController: NSTabViewController {
     
     func toggleDebugPaneVisibility() {
         
-        if let debugPaneIndex = childViewControllers.index(where: { $0 is OEPrefDebugController }) {
+        if let debugPaneIndex = childViewControllers.indexOf({ $0 is OEPrefDebugController }) {
             
             if selectedTabViewItemIndex == debugPaneIndex {
-                tabView.selectTabViewItem(at: 0)
+                tabView.selectTabViewItemAtIndex(0)
             }
             
-            removeChildViewController(at: debugPaneIndex)
+            removeChildViewControllerAtIndex(debugPaneIndex)
             
         } else {
             
