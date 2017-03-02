@@ -109,7 +109,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         
         konamiCodeIndex = 0
         
-        konamiCodeMonitor = NSEvent.addLocalMonitorForEventsMatchingMask(.KeyDownMask) { event in
+        konamiCodeMonitor = NSEvent.addLocalMonitorForEventsMatchingMask(NSKeyDownMask) { event in
             
             if Int((event.characters! as NSString).characterAtIndex(0)) == self.konamiCode[self.konamiCodeIndex] {
                 

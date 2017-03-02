@@ -33,12 +33,12 @@ extension NSAttributedString {
     /// - Parameter URL: The URL of the hyperlink.
     convenience init(string: String, hyperlinkURL URL: NSURL) {
         
-        let attributes = [
-            NSLinkAttributeName: URL.absoluteString,
-            NSForegroundColorAttributeName: NSColor.blueColor(),
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue
-        ]
+//        let attributes = [
+//            NSLinkAttributeName: URL.absoluteString,
+//            NSForegroundColorAttributeName: NSColor.blueColor(),
+//            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue
+//        ]
         
-        self.init(string: string, attributes: attributes)
+        self.init(string: string, attributes: nil)
     }
 }
