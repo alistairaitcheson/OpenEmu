@@ -223,43 +223,43 @@ static OEVersionMigrationController *sDefaultMigrationController = nil;
 
     for(NSURL *url in files)
     {
-        if([url isDirectory])
-        {
-            [self OE_importScreenShotsFromDirectory:url];
-        }
-        else
-        {
-            NSManagedObjectContext *context = [[OELibraryDatabase defaultDatabase] mainThreadContext];
-
-            NSString *file = [[url lastPathComponent] stringByDeletingPathExtension];
-            NSString *extension = [url pathExtension];
-
-            const NSUInteger dateLength = 19;
-            if([file length] <= dateLength+1 || ![[extension lowercaseString] isEqualToString:@"png"])
-                continue;
-
-            NSString *dateString = [file substringFromIndex:[file length]-dateLength];
-            NSDate    *timestamp = [formatter dateFromString:dateString];
-            NSString   *gameName = [file substringToIndex:[file length]-dateLength-1];
-
-
-            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[OEDBRom entityName]];
-
-            NSArray *predicates = @[ [NSPredicate predicateWithFormat:@"game.name contains[cd] %@", gameName],
-                                     [NSPredicate predicateWithFormat:@"game.gameTitle contains[cd] %@", gameName]];
-            [request setPredicate:[NSCompoundPredicate orPredicateWithSubpredicates:predicates]];
-
-            NSArray *fetchResult = [context executeFetchRequest:request error:nil];
-            if([fetchResult count] == 0) continue;
-
-            OEDBRom *rom = [fetchResult lastObject];
-
-            OEDBScreenshot *screenShot = [OEDBScreenshot createObjectInContext:context];
-            [screenShot setName:@"Screenshot"];
-            [screenShot setTimestamp:timestamp];
-            [screenShot setLocation:[url absoluteString]];
-            [screenShot setRom:rom];
-        }
+//        if([url isDirectory])
+//        {
+//            [self OE_importScreenShotsFromDirectory:url];
+//        }
+//        else
+//        {
+//            NSManagedObjectContext *context = [[OELibraryDatabase defaultDatabase] mainThreadContext];
+//
+//            NSString *file = [[url lastPathComponent] stringByDeletingPathExtension];
+//            NSString *extension = [url pathExtension];
+//
+//            const NSUInteger dateLength = 19;
+//            if([file length] <= dateLength+1 || ![[extension lowercaseString] isEqualToString:@"png"])
+//                continue;
+//
+//            NSString *dateString = [file substringFromIndex:[file length]-dateLength];
+//            NSDate    *timestamp = [formatter dateFromString:dateString];
+//            NSString   *gameName = [file substringToIndex:[file length]-dateLength-1];
+//
+//
+//            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[OEDBRom entityName]];
+//
+//            NSArray *predicates = @[ [NSPredicate predicateWithFormat:@"game.name contains[cd] %@", gameName],
+//                                     [NSPredicate predicateWithFormat:@"game.gameTitle contains[cd] %@", gameName]];
+//            [request setPredicate:[NSCompoundPredicate orPredicateWithSubpredicates:predicates]];
+//
+//            NSArray *fetchResult = [context executeFetchRequest:request error:nil];
+//            if([fetchResult count] == 0) continue;
+//
+//            OEDBRom *rom = [fetchResult lastObject];
+//
+//            OEDBScreenshot *screenShot = [OEDBScreenshot createObjectInContext:context];
+//            [screenShot setName:@"Screenshot"];
+//            [screenShot setTimestamp:timestamp];
+//            [screenShot setLocation:[url absoluteString]];
+//            [screenShot setRom:rom];
+//        }
     }
 }
 

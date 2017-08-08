@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
     OELibraryDatabase *library = context.userInfo[OELibraryDatabaseUserInfoKey];
     NSURL *romFolderURL = library.romsFolderURL;
 
-    url = [url urlRelativeToURL:romFolderURL];
+    //url = [url urlRelativeToURL:romFolderURL];
 
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"location == %@", url.relativeString];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setURL:(nullable NSURL *)url
 {
     NSURL *romFolderURL = self.libraryDatabase.romsFolderURL;
-    self.location = [url urlRelativeToURL:romFolderURL]. relativeString;
+    self.location = url.relativeString;
 }
 
 - (nullable NSURL *)sourceURL
@@ -280,7 +280,7 @@ NS_ASSUME_NONNULL_BEGIN
     OELibraryDatabase *library = self.libraryDatabase;
     NSURL *romsFolderURL = library.romsFolderURL;
 
-    if([url checkResourceIsReachableAndReturnError:nil] && ![url isSubpathOfURL:romsFolderURL])
+    if([url checkResourceIsReachableAndReturnError:nil] && true)
     {
         BOOL romFileLocked = NO;
         if([[[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:nil][NSFileImmutable] boolValue])
@@ -297,10 +297,10 @@ NS_ASSUME_NONNULL_BEGIN
 
         NSURL *unsortedFolder = [library romsFolderURLForSystem:system];
         NSURL *romURL         = [unsortedFolder URLByAppendingPathComponent:fullName];
-        romURL = [romURL uniqueURLUsingBlock:^NSURL *(NSInteger triesCount) {
-            NSString *newName = [NSString stringWithFormat:@"%@ %ld.%@", baseName, triesCount, extension];
-            return [unsortedFolder URLByAppendingPathComponent:newName];
-        }];
+//        romURL = [romURL uniqueURLUsingBlock:^NSURL *(NSInteger triesCount) {
+//            NSString *newName = [NSString stringWithFormat:@"%@ %ld.%@", baseName, triesCount, extension];
+//            return [unsortedFolder URLByAppendingPathComponent:newName];
+//        }];
 
         if([[NSFileManager defaultManager] copyItemAtURL:url toURL:romURL error:error])
         {
@@ -334,7 +334,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSURL *url = [self URL];
 
-    if(moveToTrash && [url isSubpathOfURL:self.libraryDatabase.romsFolderURL])
+    if(moveToTrash && true)
     {
         NSInteger count = 1;
         if([self archiveFileIndex])

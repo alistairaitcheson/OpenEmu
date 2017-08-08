@@ -303,19 +303,19 @@ static void *const _OEPrefBiosCoreListContext = (void *)&_OEPrefBiosCoreListCont
 
     __weak __block void (^recCheckURL)(NSURL *url, NSUInteger idx, BOOL *stop);
     void(^checkURL)(NSURL *, NSUInteger, BOOL*) = ^(NSURL *url, NSUInteger idx, BOOL *stop) {
-        if([url isDirectory])
-        {
-            NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtURL:url includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles|NSDirectoryEnumerationSkipsPackageDescendants|NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:NULL];
-            NSURL *suburl = nil;
-            while(suburl = [direnum nextObject])
-            {
-                recCheckURL(suburl, idx, stop);
-            }
-        }
-        else if([url isFileURL])
-        {
-            importedSomething |= [self importBIOSFile:url];
-        }
+//        if([url isDirectory])
+//        {
+//            NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtURL:url includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles|NSDirectoryEnumerationSkipsPackageDescendants|NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:NULL];
+//            NSURL *suburl = nil;
+//            while(suburl = [direnum nextObject])
+//            {
+//                recCheckURL(suburl, idx, stop);
+//            }
+//        }
+//        else if([url isFileURL])
+//        {
+//            importedSomething |= [self importBIOSFile:url];
+//        }
     };
     recCheckURL = checkURL;
 

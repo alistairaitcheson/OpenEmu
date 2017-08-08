@@ -1263,12 +1263,12 @@ typedef enum : NSUInteger
     NSURL    *temporaryStateFileURL  = [NSURL URLWithString:[NSString stringWithUUID] relativeToURL:temporaryDirectoryURL];
     OECorePlugin *core = [_gameCoreManager plugin];
 
-    temporaryStateFileURL =
-    [temporaryStateFileURL uniqueURLUsingBlock:
-     ^ NSURL *(NSInteger triesCount)
-     {
-         return [NSURL URLWithString:[NSString stringWithUUID] relativeToURL:temporaryDirectoryURL];
-     }];
+//    temporaryStateFileURL =
+//    [temporaryStateFileURL uniqueURLUsingBlock:
+//     ^ NSURL *(NSInteger triesCount)
+//     {
+//         return [NSURL URLWithString:[NSString stringWithUUID] relativeToURL:temporaryDirectoryURL];
+//     }];
 
     [_gameCoreManager saveStateToFileAtPath:[temporaryStateFileURL path] completionHandler:
      ^(BOOL success, NSError *error)

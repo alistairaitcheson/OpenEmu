@@ -163,12 +163,12 @@ NSString * const OELibraryLocationDidChangeNotificationName = @"OELibraryLocatio
     // TODO: use migratePersistentStore:toURL:options:withType:error so we don't have to restart the app
     NSURL *currentLocation = [library databaseFolderURL];
     NSURL *newLocation     = [newParentLocation URLByAppendingPathComponent:[currentLocation lastPathComponent] isDirectory:YES];
-    if([newLocation isSubpathOfURL:currentLocation])
-    {
-        OEHUDAlert *alert = [OEHUDAlert alertWithMessageText:NSLocalizedString(@"You can't move your library here!", @"") defaultButton:NSLocalizedString(@"OK", @"") alternateButton:nil];
-        [alert runModal];
-        return;
-    }
+//    if([newLocation isSubpathOfURL:currentLocation])
+//    {
+//        OEHUDAlert *alert = [OEHUDAlert alertWithMessageText:NSLocalizedString(@"You can't move your library here!", @"") defaultButton:NSLocalizedString(@"OK", @"") alternateButton:nil];
+//        [alert runModal];
+//        return;
+//    }
     
     NSError *error  = nil;
     OEFileManager *fm = [[OEFileManager alloc] init];
@@ -270,19 +270,19 @@ NSString * const OELibraryLocationDidChangeNotificationName = @"OELibraryLocatio
                 [fm setItemDoneHandler:^ BOOL (NSURL *src, NSURL *dst, NSError *error){
                    if(error == nil)
                    {
-                       // change db entry for roms
-                       if(![dst isDirectory])
-                       {
-                           [context performBlockAndWait:^{
-                               [[OEDBRom romWithURL:src inContext:context error:nil] setURL:dst];
-                           }];
-
-                           // keep track of successfully copied roms
-                           copiedCount++;
-                       }
-                       
-                       // remove original
-                       [blockFM removeItemAtURL:src error:nil];
+//                       // change db entry for roms
+//                       if(![dst isDirectory])
+//                       {
+//                           [context performBlockAndWait:^{
+//                               [[OEDBRom romWithURL:src inContext:context error:nil] setURL:dst];
+//                           }];
+//
+//                           // keep track of successfully copied roms
+//                           copiedCount++;
+//                       }
+//                       
+//                       // remove original
+//                       [blockFM removeItemAtURL:src error:nil];
                    }
                    return YES;
                 }];

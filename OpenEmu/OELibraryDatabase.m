@@ -757,12 +757,12 @@ static OELibraryDatabase *defaultDatabase = nil;
         NSMutableDictionary *mutableMetaData   = [metadata mutableCopy];
         NSURL               *databaseFolderURL = self.databaseFolderURL;
 
-        if([url isSubpathOfURL:databaseFolderURL])
-        {
-            NSString *urlString = [url.absoluteString substringFromIndex:databaseFolderURL.absoluteString.length];
-            mutableMetaData[OELibraryRomsFolderURLKey] = [@"./" stringByAppendingString:urlString];
-        }
-        else mutableMetaData[OELibraryRomsFolderURLKey] = url.absoluteString;
+//        if([url isSubpathOfURL:databaseFolderURL])
+//        {
+//            NSString *urlString = [url.absoluteString substringFromIndex:databaseFolderURL.absoluteString.length];
+//            mutableMetaData[OELibraryRomsFolderURLKey] = [@"./" stringByAppendingString:urlString];
+//        }
+//        else mutableMetaData[OELibraryRomsFolderURLKey] = url.absoluteString;
 
         // Using the instance method sets the metadata for the current store in memory, while
         // using the class method writes to disk immediately. Calling both seems redundant

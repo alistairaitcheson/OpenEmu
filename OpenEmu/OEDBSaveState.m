@@ -65,7 +65,7 @@ NSString *const OESaveStateQuicksaveName        = @"OESpecialState_quick";
     NSURL *saveStateDirectoryURL = context.libraryDatabase.stateFolderURL;
 
     // normalize URL for lookup
-    NSURL  *relativeURL = [url urlRelativeToURL:saveStateDirectoryURL];
+    NSURL  *relativeURL = url; // [url urlRelativeToURL:saveStateDirectoryURL];
     NSString *urlString = [self OE_stringByRemovingTrailingSlash:relativeURL.relativeString];
 
     // query core data
@@ -514,7 +514,7 @@ NSString *const OESaveStateQuicksaveName        = @"OESpecialState_quick";
     NSURL *saveStateDirectoryURL = [self.libraryDatabase stateFolderURLForROM:rom];
     NSURL *currentURL = self.URL;
 
-    NSString *desiredName = [NSURL validFilenameFromString:self.displayName];
+    NSString *desiredName = self.displayName; // [NSURL validFilenameFromString:self.displayName];
     NSString *desiredFileName = [NSString stringWithFormat:@"%@.%@", desiredName, OESaveStateSuffix];
     NSURL    *url         = [saveStateDirectoryURL URLByAppendingPathComponent:desiredFileName isDirectory:NO];
 
@@ -613,7 +613,7 @@ NSString *const OESaveStateQuicksaveName        = @"OESpecialState_quick";
 - (void)setURL:(NSURL *)url
 {
     NSURL *saveStateDirectoryURL = self.libraryDatabase.stateFolderURL;
-    NSString *string = [url urlRelativeToURL:saveStateDirectoryURL].relativeString;
+    NSString *string = url; //[url urlRelativeToURL:saveStateDirectoryURL].relativeString;
 
     // make sure we don't save trailing '/' for save state bundles
     string = [[self class] OE_stringByRemovingTrailingSlash:string];

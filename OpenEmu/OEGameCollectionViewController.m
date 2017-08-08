@@ -403,13 +403,13 @@ static NSString * const OESelectedGamesKey = @"OESelectedGamesKey";
             [selectedGames enumerateObjectsUsingBlock:^(OEDBGame *game, NSUInteger idx, BOOL *stopGames) {
                 [[game roms] enumerateObjectsUsingBlock:^(OEDBRom *rom, BOOL *stopRoms) {
                     NSURL *romURL = [rom URL];
-                    if(romURL != nil && [romURL isSubpathOfURL:romsFolderURL])
-                    {
-                        romsAreInRomsFolder = YES;
-
-                        *stopGames = YES;
-                        *stopRoms = YES;
-                    }
+//                    if(romURL != nil && [romURL isSubpathOfURL:romsFolderURL])
+//                    {
+//                        romsAreInRomsFolder = YES;
+//
+//                        *stopGames = YES;
+//                        *stopRoms = YES;
+//                    }
                 }];
             }];
 
