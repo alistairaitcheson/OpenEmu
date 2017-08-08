@@ -36,7 +36,7 @@ class ThreePartImage: NSImage {
     
     convenience init(imageParts: [NSImage?], vertical: Bool) {
         
-        self.init()
+        self.init(imageParts: imageParts, vertical: vertical)
         
         self.parts = imageParts
         self.vertical = vertical
@@ -104,7 +104,7 @@ class NinePartImage: NSImage {
     
     convenience init(imageParts: [NSImage?]) {
         
-        self.init()
+        self.init(imageParts: imageParts)
         
         self.parts = imageParts
         
