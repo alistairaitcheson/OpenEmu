@@ -130,6 +130,8 @@ NSString *const OEDefaultWindowTitle       = @"OpenEmu";
     window.titlebarAppearsTransparent = YES;
     window.backgroundColor = [NSColor colorWithCalibratedWhite:0.11 alpha:1.0];
     
+    window.level = NSFloatingWindowLevel;
+    
     window.restorationClass = [self class];
     NSAssert([window.identifier isEqualToString:OEMainWindowIdentifier], @"Main library window identifier does not match between nib and code");
 }
