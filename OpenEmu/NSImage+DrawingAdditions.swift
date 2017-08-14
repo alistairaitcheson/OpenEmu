@@ -57,25 +57,25 @@ class ThreePartImage: NSImage {
         self.size = size
     }
     
-    override func draw(in rect: NSRect,
-        from fromRect: NSRect,
+    override func drawInRect(rect: NSRect,
+        fromRect: NSRect,
         operation op: NSCompositingOperation,
         fraction delta: CGFloat) {
             
-        draw(in: rect,
-            from: fromRect,
+        drawInRect(rect,
+            fromRect: fromRect,
             operation: op,
             fraction: delta,
             respectFlipped: false,
             hints: nil)
     }
     
-    override func draw(in dstSpacePortionRect: NSRect,
-        from srcSpacePortionRect: NSRect,
+    override func drawInRect(dstSpacePortionRect: NSRect,
+        fromRect srcSpacePortionRect: NSRect,
         operation op: NSCompositingOperation,
         fraction requestedAlpha: CGFloat,
         respectFlipped respectContextIsFlipped: Bool,
-        hints: [String : Any]?) {
+        hints: [String : AnyObject]?) {
             
             if (!vertical && dstSpacePortionRect.height != size.height) ||
                 (vertical && dstSpacePortionRect.width != size.width) {
@@ -93,7 +93,7 @@ class ThreePartImage: NSImage {
                 vertical,
                 op,
                 requestedAlpha,
-                NSGraphicsContext.current()?.isFlipped ?? false)
+                NSGraphicsContext.currentContext()?.flipped ?? false)
     }
 }
 
@@ -130,25 +130,25 @@ class NinePartImage: NSImage {
                      height: max(max(height1, height2), height3))
     }
     
-    override func draw(in rect: NSRect,
-        from fromRect: NSRect,
+    override func drawInRect(rect: NSRect,
+        fromRect: NSRect,
         operation op: NSCompositingOperation,
         fraction delta: CGFloat) {
         
-            draw(in: rect,
-                from: fromRect,
+            drawInRect(rect,
+                fromRect: fromRect,
                 operation: op,
                 fraction: delta,
                 respectFlipped: false,
                 hints: nil)
     }
     
-    override func draw(in dstSpacePortionRect: NSRect,
-        from srcSpacePortionRect: NSRect,
+    override func drawInRect(dstSpacePortionRect: NSRect,
+        fromRect srcSpacePortionRect: NSRect,
         operation op: NSCompositingOperation,
         fraction requestedAlpha: CGFloat,
         respectFlipped respectContextIsFlipped: Bool,
-        hints: [String : Any]?) {
+        hints: [String : AnyObject]?) {
         
             let topLeftCorner     = parts[0]!
             let topEdgeFill       = parts[1]!
@@ -172,17 +172,17 @@ class NinePartImage: NSImage {
                 bottomRightCorner,
                 op,
                 requestedAlpha,
-                respectContextIsFlipped && NSGraphicsContext.current()?.isFlipped ?? false)
+                respectContextIsFlipped && NSGraphicsContext.currentContext()?.flipped ?? false)
     }
 }
 
 extension NSImage {
     
-    func subImageFromRect(_ rect: NSRect) -> NSImage {
+    func subImageFromRect(rect: NSRect) -> NSImage {
         
         return NSImage(size: rect.size, flipped: false) { [unowned self] dstRect in
-            self.draw(in: dstRect,
-                from: rect,
+            self.drawInRect(dstRect,
+                fromRect: rect,
                 operation: NSCompositeSourceOver,
                 fraction: 1)
 
@@ -190,7 +190,7 @@ extension NSImage {
         }
     }
     
-    func imageFromParts(_ parts: [AnyObject], vertical: Bool) -> NSImage {
+    func imageFromParts(parts: [AnyObject], vertical: Bool) -> NSImage {
         
         guard !parts.isEmpty else {
             return self
@@ -255,7 +255,7 @@ extension NSImage {
         }
     }
     
-    func ninePartImageWithStretchedRect(_ rect: NSRect) -> NSImage {
+    func ninePartImageWithStretchedRect(rect: NSRect) -> NSImage {
         
         let top    = NSRect(x: 0, y: rect.maxY, width: size.width, height: size.height - rect.maxY)
         let middle = NSRect(x: 0, y: rect.minY, width: size.width, height: rect.height)
@@ -265,15 +265,15 @@ extension NSImage {
         let center = NSRect(x: rect.minX, y: 0, width: rect.width, height: size.height)
         let right  = NSRect(x: rect.maxX, y: 0, width: size.width - rect.maxX, height: size.height)
         
-        let parts = [bottom.intersection(left),
-                     bottom.intersection(center),
-                     bottom.intersection(right),
-                     middle.intersection(left),
-                     middle.intersection(center),
-                     middle.intersection(right),
-                     top.intersection(left),
-                     top.intersection(center),
-                     top.intersection(right)]
+        let parts = [bottom.intersect(left),
+                     bottom.intersect(center),
+                     bottom.intersect(right),
+                     middle.intersect(left),
+                     middle.intersect(center),
+                     middle.intersect(right),
+                     top.intersect(left),
+                     top.intersect(center),
+                     top.intersect(right)]
         
         return imageFromParts(parts.map { String($0) }, vertical: false)
     }

@@ -6691,9 +6691,6 @@
 					87FBC08D1C0790B400AECF5A = {
 						CreatedOnToolsVersion = 7.1.1;
 					};
-					8D15AC270486D014006FF6A4 = {
-						LastSwiftMigration = 0830;
-					};
 				};
 			};
 			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "OpenEmu" */;
@@ -10539,7 +10536,7 @@
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "OpenEmu-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -10580,7 +10577,7 @@
 				PRODUCT_NAME = OpenEmu;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "OpenEmu-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;
