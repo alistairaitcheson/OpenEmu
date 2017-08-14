@@ -183,7 +183,7 @@ extension NSImage {
         return NSImage(size: rect.size, flipped: false) { [unowned self] dstRect in
             self.drawInRect(dstRect,
                 fromRect: rect,
-                operation: NSCompositeSourceOver,
+                operation: NSCompositingOperation.CompositeSourceOver,
                 fraction: 1)
 
             return true

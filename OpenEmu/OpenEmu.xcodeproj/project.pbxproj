@@ -69,17 +69,6 @@
 			name = "Build SystemPlugins";
 			productName = "Build SystemPlugins";
 		};
-		9479664E15EDE645004316AB /* Update Build Version */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 9479665115EDE646004316AB /* Build configuration list for PBXAggregateTarget "Update Build Version" */;
-			buildPhases = (
-				9479665315EDE64C004316AB /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "Update Build Version";
-			productName = "Update Build Version";
-		};
 		94C51FBC1847077700206E6F /* Set Experimental Appcast URLs */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 94C51FBE1847077700206E6F /* Build configuration list for PBXAggregateTarget "Set Experimental Appcast URLs" */;
@@ -1296,13 +1285,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 94A224A21707543600098DA0;
 			remoteInfo = "Atari 2600";
-		};
-		9479665415EDE6B3004316AB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9479664E15EDE645004316AB;
-			remoteInfo = "Update Build Version";
 		};
 		94A5321518DF8A2B00AE11B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6096,7 +6078,6 @@
 			);
 			dependencies = (
 				8309A781166CE6360013AD4A /* PBXTargetDependency */,
-				9479665515EDE6B3004316AB /* PBXTargetDependency */,
 				3DAA589A14464890001C09A8 /* PBXTargetDependency */,
 				1B6A25021430F8FB009F1CE1 /* PBXTargetDependency */,
 			);
@@ -6763,7 +6744,6 @@
 				82C9C96F0F080C7F0071460B /* Distribution */,
 				37C802FF101564A300356EF3 /* Build & Copy OpenEmuBase */,
 				83F37141140BB166005A7353 /* Build SystemPlugins */,
-				9479664E15EDE645004316AB /* Update Build Version */,
 				94EBBCD7183F422500743756 /* Build & Copy Experimental SystemPlugins */,
 				94C51FBC1847077700206E6F /* Set Experimental Appcast URLs */,
 			);
@@ -7522,19 +7502,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "rm -rf \"$USER_LIBRARY_DIR/Frameworks/OpenEmuBase.framework\"\ncp -R \"$BUILT_PRODUCTS_DIR/OpenEmuBase.framework\" \"$USER_LIBRARY_DIR/Frameworks/OpenEmuBase.framework\"";
-		};
-		9479665315EDE64C004316AB /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Define BUILD_VERSION with git revision and build configuration\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\ngitRefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\n\nlongBuildRef=`${gitBundle} rev-parse --verify HEAD`\n\nbundleConfiguration=\"$CONFIGURATION\"\nbuildRef=\"${gitRefInfo}-${bundleConfiguration}\"\n\necho \"#define BUILD_VERSION @\\\"$buildRef\\\"\" > OEBuildVersion.h\necho \"#define LONG_BUILD_VERSION @\\\"$longBuildRef\\\"\" >> OEBuildVersion.h";
 		};
 		94C51FBD1847077700206E6F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8346,11 +8313,6 @@
 			isa = PBXTargetDependency;
 			target = 94A224A21707543600098DA0 /* Atari 2600 */;
 			targetProxy = 946C7ABE19EE4B70000F9466 /* PBXContainerItemProxy */;
-		};
-		9479665515EDE6B3004316AB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9479664E15EDE645004316AB /* Update Build Version */;
-			targetProxy = 9479665415EDE6B3004316AB /* PBXContainerItemProxy */;
 		};
 		94A5321618DF8A2B00AE11B3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9733,22 +9695,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = oesystemplugin;
-			};
-			name = Release;
-		};
-		9479664F15EDE645004316AB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		9479665015EDE645004316AB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -11222,15 +11168,6 @@
 			buildConfigurations = (
 				946B946B178289BB00A212AC /* Debug */,
 				946B946C178289BB00A212AC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9479665115EDE646004316AB /* Build configuration list for PBXAggregateTarget "Update Build Version" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9479664F15EDE645004316AB /* Debug */,
-				9479665015EDE645004316AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

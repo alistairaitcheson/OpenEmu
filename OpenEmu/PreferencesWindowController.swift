@@ -109,32 +109,6 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         
         konamiCodeIndex = 0
         
-        konamiCodeMonitor = NSEvent.addLocalMonitorForEventsMatchingMask(NSKeyDownMask) { event in
-            
-            if Int((event.characters! as NSString).characterAtIndex(0)) == self.konamiCode[self.konamiCodeIndex] {
-                
-                self.konamiCodeIndex += 1
-                
-                if self.konamiCodeIndex == self.konamiCode.count {
-                    
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    let debugModeActivated = !defaults.boolForKey(PreferencesWindowController.debugModeKey)
-                    defaults.setBool(debugModeActivated, forKey: PreferencesWindowController.debugModeKey)
-                    
-                    NSSound(named: "secret")!.play()
-                    
-                    self.preferencesTabViewController.toggleDebugPaneVisibility()
-                    
-                    self.konamiCodeIndex = 0
-                }
-                
-                return nil
-            }
-            
-            self.konamiCodeIndex = 0
-            
-            return event
-        }
     }
     
     func windowDidResignKey(notification: NSNotification) {
