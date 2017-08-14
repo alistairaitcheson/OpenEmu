@@ -30,15 +30,19 @@ extension URL {
     
     var hasImageSuffix: Bool {
         
-        let urlSuffix = pathExtension.lowercased()
+        guard let urlSuffix = pathExtension.lowercased() else {
+            return false
+        }
         
         return NSImage.imageTypes().contains(urlSuffix)
     }
     
     func isSubpathOfURL(_ url: URL) -> Bool {
         
-        let parentPathComponents = url.standardized.pathComponents
-        let ownPathComponents = standardized.pathComponents
+        guard let parentPathComponents = url.standardized.pathComponents,
+            let ownPathComponents = standardized.pathComponents else {
+                return false
+        }
         
         let ownPathCount = ownPathComponents.count
         
@@ -57,7 +61,8 @@ extension URL {
             return false
         }
         
-        return true
+        return (resourceValues[URLResourceKey.isDirectoryKey]! as! NSNumber).boolValue &&
+               !(resourceValues[URLResourceKey.isPackageKey]! as! NSNumber).boolValue
     }
     
     var fileSize: NSNumber {
@@ -66,7 +71,7 @@ extension URL {
             return 0
         }
         
-        return 0
+        return resourceValues[URLResourceKey.fileSizeKey]! as! NSNumber
     }
     
     func uniqueURLUsingBlock(_ block: (Int) -> URL) -> URL {
@@ -89,8 +94,10 @@ extension URL {
     
     func urlRelativeToURL(_ url: URL) -> URL? {
         
-        let selfAbsoluteString = standardized.absoluteString
-        let urlAbsoluteString = url.standardized.absoluteString
+        guard let selfAbsoluteString = standardized.absoluteString,
+                  let urlAbsoluteString = url.standardized.absoluteString else {
+            return nil
+        }
         
         let range = (selfAbsoluteString as NSString).range(of: urlAbsoluteString)
         

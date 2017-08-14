@@ -275,6 +275,6 @@ extension NSImage {
                      top.intersection(center),
                      top.intersection(right)]
         
-        return imageFromParts(parts.map { String(describing: $0) } as [AnyObject], vertical: false)
+        return imageFromParts(parts.map { String($0) }, vertical: false)
     }
 }
